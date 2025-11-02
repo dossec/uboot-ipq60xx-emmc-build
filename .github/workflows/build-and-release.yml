@@ -31,7 +31,7 @@ jobs:
         run: |
           ./build.sh
 
-          mv openwrt-ipq6018-u-boot.mbn uboot-ipq60xx-emmc-"$UBOOT_VERSION".bin
+          mv uboot-ipq60xx-emmc.bin uboot-ipq60xx-emmc-"$UBOOT_VERSION".bin
 
       - name: Release U-Boot
         uses: softprops/action-gh-release@master
