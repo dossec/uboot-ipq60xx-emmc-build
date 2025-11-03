@@ -1,4 +1,5 @@
 #include <common.h>
+#include <cli.h>
 #include <gl_api.h>
 #include <asm/gpio.h>
 #include <fdtdec.h>
@@ -112,7 +113,7 @@ void check_button_is_press(void)
 			led_off("power_led");
 			led_on("blink_led");
 			run_command("httpd 192.168.1.1", 0);
-			run_command("res", 0);
+			cli_loop();
 			break;
 		}
 	}
