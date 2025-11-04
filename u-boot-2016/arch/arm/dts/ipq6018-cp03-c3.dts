@@ -29,8 +29,10 @@
 		blink_led = "/tlmm-gpio/led_gpio/led_blue";
 		system_led = "/tlmm-gpio/led_gpio/led_green";
 		reset_key = "/tlmm-gpio/key_gpio/reset";
+		screen_key = "/tlmm-gpio/key_gpio/screen";
+		wps_key = "/tlmm-gpio/key_gpio/joylink";
 	};
-	
+
 	ess-switch {
 		switch_mac_mode = <PORT_WRAPPER_PSGMII>;
 		switch_mac_mode1 = <PORT_WRAPPER_SGMII_PLUS>;
@@ -62,13 +64,13 @@
 			};
 		};
 	};
-	
+
 	tlmm-gpio {
 		stb1 = <69>;
 		stb2 = <70>;
 		clk = <73>;
 		dio = <74>;
-	
+
 		led_gpio {
 			led_red {
 				gpio = <57>;
@@ -95,7 +97,7 @@
 				oe = <GPIO_OE_ENABLE>;
 			};
 		};
-		
+
 		key_gpio {
 			reset {
 				gpio = <56>;
@@ -121,4 +123,3 @@
 		};
 	};
 };
-

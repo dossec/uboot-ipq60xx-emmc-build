@@ -145,13 +145,13 @@ void gl_gpio_init(const char *gpio_name)
 {
 	int node;
 	struct qca_gpio_config gpio_config;
-	
+
 	node = fdt_path_offset(gd->fdt_blob, gpio_name);
 	if (node < 0) {
 		printf("Could not find %s node\n", gpio_name);
 		return;
 	}
-	
+
 	gpio_config.gpio	= fdtdec_get_uint(gd->fdt_blob,
 						  node, "gpio", 0);
 	gpio_config.func	= fdtdec_get_uint(gd->fdt_blob,
@@ -190,7 +190,7 @@ void gl_led_init(void)
 	gpio_base = (unsigned int *)GPIO_CONFIG_ADDR(GPIO_RED_LED);
 	writel(0x203, gpio_base);
 	gpio_direction_output(GPIO_RED_LED, 0x1);
-	
+
 	gpio_base = (unsigned int *)GPIO_CONFIG_ADDR(GPIO_GREEN_LED);
 	writel(0x203, gpio_base);
 	gpio_direction_output(GPIO_GREEN_LED, 0x1);
@@ -211,7 +211,8 @@ void gl_led_init(void)
 void gl_btn_init(void)
 {
 	gl_gpio_init("reset_key");
-	
+	gl_gpio_init("wps_key");
+
 	/*unsigned int *gpio_base;
 
 	gpio_base = (unsigned int *)GPIO_CONFIG_ADDR(GPIO_JOYLINK_BTN);

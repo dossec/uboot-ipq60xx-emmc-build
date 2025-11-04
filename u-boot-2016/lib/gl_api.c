@@ -93,12 +93,34 @@ bool button_is_press(const char *gpio_name, int value)
 void check_button_is_press(void)
 {
 	int counter = 0;
+	char *button_name = NULL;
 
-	while(button_is_press("reset_key", GL_RESET_BUTTON_IS_PRESS)){
+	// 检测哪个按键被按下
+    if (button_is_press("reset_key", GL_RESET_BUTTON_IS_PRESS)) {
+        button_name = "RESET";
+    } else if (button_is_press("wps_key", GL_WPS_BUTTON_IS_PRESS)) {
+        button_name = "WPS";
+    }
 
-		if(counter == 0)
-			printf("Reset button is pressed for: %2d ", counter);
+	// 如果任一按键被按下
+	while (button_name != NULL) {
+		// 重新检测按键状态
+        int still_pressed = 0;
 
+        if (strcmp(button_name, "RESET") == 0) {
+            still_pressed = button_is_press("reset_key", GL_RESET_BUTTON_IS_PRESS);
+        } else {
+            still_pressed = button_is_press("wps_key", GL_WPS_BUTTON_IS_PRESS);
+        }
+
+        if (!still_pressed) {
+            break;  // 按键已释放
+        }
+
+		if (counter == 0)
+			printf("%s button is pressed for: %2d ", button_name, counter);
+
+		// LED 闪烁
 		led_off("power_led");
 		mdelay(350);
 		led_on("power_led");
@@ -112,6 +134,7 @@ void check_button_is_press(void)
 		if(counter >= 5){
 			led_off("power_led");
 			led_on("blink_led");
+			printf("\n");
 			run_command("httpd 192.168.1.1", 0);
 			cli_loop();
 			break;
